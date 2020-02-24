@@ -1,18 +1,57 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Login Form</title>
-    </head>
-    <body>
-        <h1>Login Form</h1>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registeration Page</title>
+  </head>
+  <body>
+    <h2>Register</h2>
+    <form>
+      <div>
+        <label for="firstname">First Name:</label>
+        <input type="text" name="firstname" id="firstname" required />
+        <label for="lastname">Last Name:</label>
+        <input type="text" name="lasttname" id="lastname" required />
+      </div>
 
-        <form>
-            <label for="username">Username:</label>
-            <input id="username" type="text" placeholder="username">
-            <label for="password">Password:</label>
-            <input id="password" type="password" placeholder="username">
-            <input type="submit">
-        </form>
-        
-    </body>
+      <div>
+        <label for="male">Male:</label>
+        <input type="radio" name="gender" id="male" value="male" required />
+        <label for="female">Female:</label>
+        <input type="radio" name="gender" id="female" value="female" required />
+        <label for="other">Other:</label>
+        <input type="radio" name="gender" id="other" value="other" required />
+      </div>
+
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required />
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+          minlength="5"
+          maxlength="10"
+        />
+      </div>
+
+      <div>
+        <label for="birthday">Birthday:</label>
+        <input type="date" name="birthday" id="birthday" required>
+      </div>
+
+      <div>
+        <label for="terms"
+          >I agree to the terms and conditions
+          <input type="checkbox" name="terms" id="terms" required />
+        </label>
+      </div>
+      <div>
+        <input type="submit"/>
+      </div>
+    </form>
+  </body>
 </html>

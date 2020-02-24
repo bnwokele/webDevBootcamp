@@ -16,31 +16,24 @@
       </div>
 
       <div>
-        <label for="male">Male:</label>
-        <input type="radio" name="gender" id="male" value="male" required />
-        <label for="female">Female:</label>
-        <input type="radio" name="gender" id="female" value="female" required />
-        <label for="other">Other:</label>
-        <input type="radio" name="gender" id="other" value="other" required />
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="male" value="male" />
+        <label for="female">Female</label>
+        <input type="radio" name="gender" id="female" value="female" />
+        <label for="other">Other</label>
+        <input type="radio" name="gender" id="other" value="other" />
       </div>
 
       <div>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" placeholder="your email" required />
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          required
-          minlength="5"
-          maxlength="10"
-        />
+        <label for="paswd">Password:</label>
+        <input type="password" name="password" id="paswd" pattern=".{5,10}" required title="Must be 5 to 10 characters" />
       </div>
 
       <div>
         <label for="birthday">Birthday:</label>
-        <input type="date" name="birthday" id="birthday" required>
+        <input type="date" name="birthday" id="birthday" >
       </div>
 
       <div>

@@ -1,0 +1,337 @@
+Comment:
+// in - line Comment - lines that the computer ignores
+/* multi line comment */ 
+
+Data types and Variables:
+undefined - something that has not been defiened
+null - nothing
+boolean - true/false
+string
+symbol
+number
+object - key value pairs
+
+Variables - box that stores a value
+types:
+let - should only be used within the scope of where it is declared
+var - used throughout the program
+const - variables that should never change
+
+declare a variable:
+var a;
+
+assign/initialize a variable:
+var b = 2;  
+
+strings: 
+Escaping literal quotes in strings - quotes show where strings stop and ends.
+if you are declaring a string with a quotes already in it, this can cause problems.
+you can use an escape character to indicate that a quote with a string
+does not represent the end of the string.
+escape character = \ before inside quote
+can also use combination of single quotes and double quotes to 
+remove confusion
+example -
+var myStr = "I am a \"double quoted\" sting inside \"double quotes\"";
+
+Escape Sequence in strings
+CODE OUTPUT
+\' single quote
+\" double quote
+\\ backslash
+\n newline
+\r carriage
+\t tab
+\b backspace
+\f fprm feed
+
+length of string:
+user .length 
+
+var firstName = "Ben";
+var firstNameLength = firstName.length;
+
+Bracket Notation:
+
+get a character at a specific index in a string
+zero-indexing
+
+var firstLetterOfFirstName = firstName[0]; 
+var lastLetterOfFirstName = firstName[firstName.length-1];
+
+*Strings are immutable - 
+cannot change an individual character in a string to someother character.
+Have to assign new value to the string variable 
+
+Arrays -
+ability to store multiple elements with different datatypes in it
+var myArray = ["Ben", 22]
+
+Nested Array-
+when one of the elements in the array is another array
+var ourArray = [["Ben", 22], ["Tre", 21], ["Pre", 24]]
+
+Acces to data with indexes -
+var myData = myArray[0];
+
+-double Bracket Notation
+var ourArrayData = ourArray[0][0];
+
+modify arrays with indexes
+myArray[1] = 23;
+
+Append or remove data to array
+-push function: add element to the back of the array
+ 
+ var myArray = ["Ben", 22];
+ myArray.push("innovator");
+
+ -pop function: remove the last element in the array and puts it i the variable
+ 
+ var myArray = ["Ben", 22, innovator];
+removedFromArray.pop();
+
+shift function - removes first element from array 
+stores that element in variable
+
+var ourArray = [["Ben", 22], ["Tre", 21], ["Pre", 24]];
+removedFromArray2 = ourArray.shift();
+
+unshift - adds element to beginning of the array
+var ourArray = [["Tre", 21], ["Pre", 24]];
+ourArray.unshift(["Ben", 22]);
+
+Functions - allow us to create reusable code 
+function functionName() {
+    code inside the curly Bracket is run
+    whenever the function is called
+}
+
+Passing values to functions with arguments
+
+parameters - variables that act as placeholders for values that 
+are to be inputted into the function when it is called
+
+function ourFunctionWithArgs(a, b) {
+    console.log(a - b);
+}
+
+ourFunctionWithArgs(10, 5);
+
+scope: visibility of variables
+
+global scope - variables that are declared outside a function block have
+global scope
+
+local scope - variables declared with a function or its parameters
+they are only visible within the function
+
+global and local variables can have the same name.
+When they do, the local variable takes precedent
+
+var outWear = "T-Shirt";
+function myOutfit() {
+    var outerWear = "sweater";
+
+    return outerWear;
+}
+console.log(myOutfit()) - will return "sweater" because it value of the 
+local variable and takes precedence
+
+Return statement - used to return value from a function
+returns whatever is after the return keyword
+
+if functions dont have return statements, then the return value is 
+undefined
+
+var sum = 0
+function addOne() {
+    sum =  sum + 1;
+}
+
+Assigning function return values to variables -
+function change(num){
+    return (num + 3)/ 5;
+}
+changed = change(7);
+
+Stand in Line -
+Queue is an abstarct data structure where items are kept in order
+new items can be added to the back of the Queue and old items are taken
+from the top of the Queue 
+like a bus line - new people go to to the back and people in front leave
+or enter the bus
+
+function nextInLine(arr, item) {
+    
+    arr.push(item)
+    return arr.shift();
+}
+
+console.log("Before: " + JSON.stringify(testArr));
+console.log(nextInLine(testArr, 6));
+console.log("After: " + JSON.stringify(testArr));
+
+boolean values:
+other datatypes with only 2 values:
+true and false
+
+Conditional Logic (if statement):
+used to make decisions in code
+the keyword if tells js to execute the code defined inside the
+curly braces if certain conditions are met
+
+assignment operator = "="
+comparison operator = "=="
+    - attempts to convert each value being compared to a common type
+strict equality = "==="
+    - doesn't convert each value to a common type
+inequality operator = "!="
+strict inequality operator = "!=="
+
+function compareEquality(a, b) {
+    if (a == b) {
+        return "Equal";
+    }
+    return "Not Equal";
+}
+console.log(compareEquality(10, "10")) // return true
+
+AND operator = "&&"
+    - checks if two things are true 
+OR - "||"
+
+else statement
+    - if the condition in the if statement is wrong, the code inside the 
+    else statement is run
+else if
+    - used to chain multiple else statements
+
+ORDER OF IF STATEMENTS:
+once the first if statement is meant, the next statements are not
+checked so it is important to think about order
+
+                    SWITCH STATEMENTS
+instead of using if/else statements, you can use switch statements
+switch statements tests a value and can have many case statements
+which define various possbile values
+uses strict equality operator ===
+
+function caseInSwitch {
+    var answer = "";
+    switch(val) { // compare val to different cases we have
+        case 1: // if val === 1, then set answer to equal alpha
+            answer = 'alpha';
+            break; // when you break, it goes to the end of the of the switch statement and it does evaluate any other cases
+        case 2:
+            answer = "beta";
+            break;
+        case 3:
+            answer = "gamma";
+            break;
+        case 4:
+            answer = "delta";
+            break;
+        default:
+            answer = "none of the above";
+            break;
+    }
+    return answer;
+}
+
+console.log(caseInSwitch(4));
+
+Default option in switch statements:
+    returns a value if none of the cases matches the argument passed in
+
+Multiple identical options in switch statements
+used when we want multiple cases to return the same value
+
+function sequentialSizes(val){
+    var answer = "";
+    switch(val) {
+        case 1:
+        case 2:
+        case 3:
+            answer = "Low";
+            break;
+        case 4:
+        case 5:
+        case 6:
+            answer = "Mid";
+            break;
+        case 7:
+        case 8:
+        case 9:
+            answer = "High";
+            break;
+        
+    }
+}
+
+                        Replacing if else chain with switch statements
+if/else statements
+function chainelseif(val){
+    var answer = "";
+    if (val == 1) {
+        return 'alpha';
+    } else if (val == 2) {
+        return 'beta';
+    } else if (val == 3) {
+        return 'gamma';
+    } else if (val == 4) {
+        return 'delta';
+    } else {
+        return "none of the above"
+    }
+}
+
+switch statement
+function caseInSwitch {
+    var answer = "";
+    switch(val) { // compare val to different cases we have
+        case 1: // if val === 1, then set answer to equal alpha
+            answer = 'alpha';
+            break; // when you break, it goes to the end of the of the switch statement and it does evaluate any other cases
+        case 2:
+            answer = "beta";
+            break;
+        case 3:
+            answer = "gamma";
+            break;
+        case 4:
+            answer = "delta";
+            break;
+        default:
+            answer = "none of the above";
+            break;
+    }
+    return answer;
+}
+
+returning boolean values from functions
+comparison operators return booleans (true or false)
+so instead of doing this:
+
+function isLess(a, b){
+    if (a < b) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+do this:
+
+function isLess(a, b){
+    return a < b;
+}
+
+useful built-in functions:
+--alert() - pops up a message to the user
+    ex: alert("Message to be alerted")
+-- console.log() - prints a message to the js console
+-- prompt()- lets us get input from a user
+    can store in a variable
+    example:
+    var username = prompt("What is your name?");

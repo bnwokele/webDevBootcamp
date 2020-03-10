@@ -335,3 +335,72 @@ useful built-in functions:
     can store in a variable
     example:
     var username = prompt("What is your name?");
+
+                            Objects
+structure of code that models a real life object
+Properties are used to obtain the elements in an object
+
+var ourObject = {property:value}
+
+var ourDog = {
+    "name":"Joe",
+    "legs": 4,
+    "tails":1,
+    "fav food": "meat"
+    };
+
+Accessing object Properties
+
+dot Notation - object.propertyname
+    Used to access value of an object's property
+var nameValue = ourDog.name;
+
+Bracket Notation - object[propertyname]-
+    Used to access value of an object's property
+    required when property has a space in it like "fav food"
+var nameValue = ourDog["name"];
+var favFoodValue = ourDog["fav food"]
+
+Modifying object Properties
+dot notation
+    can also be used to set an object value to a new value
+
+ourDog.name = "Kate";
+
+Add new properties to an object
+can be done using bracket or dot notation
+
+ourDog.bark = "bow-bow";
+ourDog.color = "yellow";
+
+delete property
+
+delete ourDog.bark; // ourDog no longer has a bark property
+
+looking up values in an object
+
+function ourDogLookUp(val){
+    var result = "";
+
+    var ourDog = {
+    "name":"Joe",
+    "legs": 4,
+    "tails":1,
+    "fav food": "meat"
+    };
+    result = ourDog[val];
+
+    return result;
+}
+
+hasOwnPropert y() - method used to check if an object has
+a property
+
+ourDog.hasOwnProperty(val)
+
+
+Manipulating complex Objects
+
+Javascript object is a way to store flexible data
+can store strings, objects, arrays, numbers and more
+

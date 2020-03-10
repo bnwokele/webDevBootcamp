@@ -136,10 +136,25 @@
         return answer;
     }
     console.log(sequentialSizes(11));
-    */
+    
 
     function isLess(a, b){
         return a < b;
     }
     console.log(isLess(5, 4));
+    */
+    function ourDogLookUp(val){
+        var result = "";
+
+        var ourDog = {
+        "name":"Joe",
+        "legs": 4,
+        "tails":1,
+        "fav food": "meat"
+        };
+        result = ourDog[val];
+
+        return result;
+    }
+    console.log(ourDogLookUp("fav food"));
 </script>

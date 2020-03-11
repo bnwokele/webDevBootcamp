@@ -404,3 +404,259 @@ Manipulating complex Objects
 Javascript object is a way to store flexible data
 can store strings, objects, arrays, numbers and more
 
+Nested objects 
+
+var myStorage = {
+    "car": {
+        "inside": {
+            "glove box": "maps",
+            "passenger seat": "crumbs"
+        },
+        "outside": {
+            "trunk": "jack"
+        }
+    }
+};
+
+var glovedBoxContents = myStorage.car.inside["glove box"];
+
+Accessing nested arrays
+var listMyStorage = [
+    {
+        "car": {
+            "inside": {
+                "glove box": "maps",
+                "passenger seat": "crumbs",
+                "list": [
+                    "rose",
+                    "tulip",
+                    "dandelion"
+                ]
+            },
+            "outside": {
+                "trunk": "jack"
+            }
+        }
+    }
+];
+
+combine dot and bracekt notation to access a list inside an object
+inside a list  
+
+var listContents = listMyStorage[1].list[1];
+
+                            LOOPS
+Allow you to run a specific code block multiple times
+while a specified condition is true and stops when the
+condition is no longer true
+
+While LOOPS
+
+var myArray = [];
+var i = 0;
+
+while(i<5){
+    myArray.push(i);
+    i++;
+}
+// result [0,1,2,3,4]
+
+FOR LOOPS
+
+var ourArray = [];
+
+for (var i = 0; i < 5; i++){
+    // for (variable initialization, condition to be met, 
+    final expression done at the end of each iteration)    
+    ourArray.push(i);
+}
+// result [0,1,2,3,4]
+
+counting backwards
+
+var oddArray = [];
+
+for (var i = 9; i > 0; i -= 2) {
+    oddArray.push(i);
+}
+
+iterate through an array with a for loop
+
+ var ourArr = [9, 10, 11, 12];
+// length of ourArr is 4
+
+var ourTotal = 0;
+
+ for (var i = 0; i < ourArray.length; i++) {
+     // i only goes to [3]
+     ourTotal += ourArr[i];
+ }
+
+ Nesting for LOOPS
+ Used when there is a nested list (multi-dimensional list)
+    ex: arrays inside arrays
+
+var ourMultArray = [[1,2],[3,4],[5,6,7]];
+var product = 1;
+var productArr = [];
+
+for (var i = 0; i < ourMultArray.length; i++) {
+    for (var x = 0; x  < ourMultArray[i].length; x++) {
+        product *=  ourMultArray[i][x];
+        productArr.push(product);
+    }
+}
+
+iterate with Do ... While loops
+difference between while and do while
+
+    while loop: first checks condition before running
+    code inside the loop
+
+    var myArray = [];
+    var i = 10;
+
+    while(i<5){
+        myArray.push(i);
+        i++;
+    }
+    // console.log(i, myArray);
+    result (10, [] // because 10 is not less than 5 
+    code in while loop will never run)
+
+    Do ... while loop: runs at least one time before 
+    checking the condition
+
+    var myArray = [];
+    var i = 10;
+
+    do {
+        myArray.push(i);
+        i++;
+    } while(i<5)
+    // console.log(i, myArray);
+    result (11, [10] // because it runs before
+    checking condition, code runs once before checking 
+    to see if condition is met. B/c condition is not met
+    code in do while loop will only run once)
+
+return a value or a default value if the desired
+value doen't exist
+
+return "value" || "No such property" 
+// return desired value or no such property
+
+Generate random fractions
+use Math.random() function
+    always returns a number between 0 and 1, could be 0
+    but can't be 1
+
+Generate random whole numbers
+use Math.random() function and Math.floor()
+    ex; return random whole number betwen 0 and 19
+    Math.floor(Math.random() * 20);
+        get a number between 0 and 20 (not including 20)
+        then Math.floor rounds down to a whole number
+
+
+Generate random whole numbers within a range
+function randomRange(ourMin, OurMax){
+
+    return Math.floor(Math.random() * (OurMax - ourMin + 1) + ourMin);
+}
+var myRandom = randomRange(5, 15);
+
+parseInt function
+    Takes a string and returns an integer
+    example: parseInt("56");
+
+                        Use Conditional Ternary operator
+shorter version of if/else statement
+
+Syntax:
+condition ? statement-if-true : statement-if-false;
+
+function checkEqual(a, b) {
+    if(a === b) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Ternary operator
+ a === b ? true : false;
+
+ var myArr = ["boy", "girl", "man", "woman"]
+
+function checkList(arr, val) {
+    for (var i = 0; i < myArr.length; i++) {
+       return arr[i] === val ? "found item" : "item not in list";
+    }
+}
+
+Use multiple conditional (Ternary) operators
+
+Ternary structures can be nested inside each other to make 
+them more powerful
+
+function checkSign(num) {
+    // checks sign of a number (+, -, 0)
+    return num > 0 ? "positive" : num < 0 ? "negative" : "zero";
+}
+
+Differences between var and let keyword
+let - does not let you declare a variable twice
+
+let catName = "yu";
+let catName = "meow";
+// results in duplication declaration error
+
+var catName = "yu";
+vat catName = "meow";
+// this results in no error
+
+Scope of var and let
+
+Var - declared globally or locally if inside a function
+
+Let - scope of let is limited to expression or 
+block statement it is declared in
+- allows you to make sure variable is only defined 
+in the area you want it to be defined in
+
+Const key
+
+read only variable -
+    same features as let but value in const variable 
+    cannot be re-assigned  
+
+    capitalize the const Variables
+    ex const SENTENCE = "freeCodeCamp is cool";
+
+In code, only use const and let
+
+Mutate an Array declared as const
+
+You can't reassign a variable declared with const, you
+can mutate an Array declared with const
+    done with bracket notation
+
+const s = [5,7,2];
+
+Won't work  
+s = [2,5,7];
+
+Will work
+s[0] = 2;
+s[1] = 5;
+s[2] = 7;
+
+Prevent object mutation
+
+function randomRange(ourMin, OurMax){
+
+    return Math.floor(Math.random() * (OurMax - ourMin + 1) + ourMin);
+}
+var myRandom = randomRange(0, arr.length - 1)
+

@@ -91,13 +91,13 @@ Append or remove data to array
  var myArray = ["Ben", 22, innovator];
 removedFromArray.pop();
 
-shift function - removes first element from array 
+-shift function - removes first element from array 
 stores that element in variable
 
 var ourArray = [["Ben", 22], ["Tre", 21], ["Pre", 24]];
 removedFromArray2 = ourArray.shift();
 
-unshift - adds element to beginning of the array
+-unshift - adds element to beginning of the array
 var ourArray = [["Tre", 21], ["Pre", 24]];
 ourArray.unshift(["Ben", 22]);
 

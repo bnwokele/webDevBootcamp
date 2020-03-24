@@ -1,0 +1,33 @@
+h1 {
+    text-align: center;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 100px;
+    background-image: url(Resources/Desmoto\ images/pattern.jpeg);
+    color: khaki;
+}
+
+.section-header {
+    color: white;
+    font-size: 32px;
+    font-family: Helvetica;
+    font-weight: bold;
+}
+
+.mediumspringgreen {
+    background-color: mediumspringgreen;
+}
+
+.lightcoral {
+    background-color: lightcoral;
+}
+
+.skyblue {
+    background-color: skyblue;
+}
+
+.item-link {
+    color: blue;
+    font-weight: bold;
+    font-family: Helvetica;
+}

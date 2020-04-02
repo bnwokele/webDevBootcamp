@@ -1,0 +1,23 @@
+body{
+    font-size: 10px;
+}
+
+h1 {
+    font-size: 5em;
+    text-align: center;
+    
+}
+
+h2 {
+    font-size: 3em;
+    font-family: 'Lobster', cursive;
+    text-decoration: underline;
+}
+
+p {
+    font-size: 2em;
+    font-family: 'Lobster', cursive;
+    line-height: 1.5;
+    font-weight: normal;
+}
+

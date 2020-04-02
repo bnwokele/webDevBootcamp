@@ -38,7 +38,7 @@ input {
 
 /* Give the element with id 'special' a 2px solid blue border(pick your own rgb blue)*/
 #special {
-    border: 2px solid rgba(10, 20, 200, .3);
+    border: 2px solid rgba(10, 20, 200);
 }
 
 /*Make all the <p>'s that are nested inside of divs 25px font(font-size: 25px)*/
@@ -82,9 +82,9 @@ label {
 }
 
 /*Make the first letter of the element with id 'special' green and 100px font size(font-size: 100)*/
-#special::first-letter {
+#special:first-letter {
     color: green;
-    font-size: 100 px;
+    font-size: 100px;
 }
 
 /*Make the <h1> element's color change to blue when hovered over */

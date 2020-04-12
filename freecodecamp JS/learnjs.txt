@@ -393,7 +393,7 @@ function ourDogLookUp(val){
     return result;
 }
 
-hasOwnPropert y() - method used to check if an object has
+hasOwnProperty() - method used to check if an object has
 a property
 
 ourDog.hasOwnProperty(val)

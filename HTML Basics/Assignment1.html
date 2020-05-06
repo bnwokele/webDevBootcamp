@@ -41,18 +41,5 @@
     <div>
         <a href="https://www.google.com/">click me to go to google</a>
     </div>
-    <script>
-      fetch('https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json')
-      .then((data) => data.json())
-      .then((data) => {
-      // console.log(data);
-        let newArray = [];
-        for(let i= 0; i<=0;i++) {
-          if(data[i].clearance_code_inc_type == "ACCIDENT"){
-          newArray.push(data[i].location)
-          }
-        }  
-      })
-    </script>
   </body>
 </html>

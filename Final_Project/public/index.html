@@ -60,7 +60,7 @@
     marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
     
     // add lat/lon with accident incidents to the map
-    fetch('https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json')
+    fetch('/api')
       .then((data) => data.json())
       .then((data) => {
         //console.log(data) 

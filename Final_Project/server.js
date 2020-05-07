@@ -41,25 +41,24 @@ function processDataForFrontEnd(req, res) {
           .then((rep) => {
             let arr= JSON.stringify(rep).split(" ");
             let start=arr[1].search("postalCode");
-            zip= parseInt(arr[1].substring(start+13,start+18));
-            if (!(zip in zipcode)){
-              zipcode[zip]=[];
-            } 
+            let zip= parseInt(arr[1].substring(start+13,start+18));
+            if (!(zip == NaN) && !(zip in zipcode)){zipcode[zip]=[]; }
               let temp = zipcode[zip];
               temp.push([latitude, long]);
-              zipcode[zip] = temp;// gives the zipcodeg
+              zipcode[zip] = temp;// gives the zipcode
           })
       }
     }
+    // console.log(zipcode);
     return zipcode;   
   })
-    .then((data) => {
-      res.send({data}); // here's where we return data to the front end
+  .then((data) => {
+    res.send({data}); // here's where we return data to the front end
     })
-    .catch((err) => {
-      console.log(err);
-      res.redirect('/error');
-    });
+  .catch((err) => {
+    console.log(err);
+    res.redirect('/error');
+  });
 }
 
 // This is our first route on our server.

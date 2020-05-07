@@ -12,6 +12,7 @@ const app = express();
 // Otherwise, it will default to port 3000
 const port = process.env.PORT || 3000;
 
+
 // Our server needs certain features - like the ability to send and read JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

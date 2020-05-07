@@ -51,18 +51,23 @@
     fetch('/api')
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
-    //     let x = document.createElement("UL");
-    //     x.setAttribute("class", "ziplist")
-    //     for(let key in data) {
-    //       if ( key == 38){continue;}
-    //       let li = document.createElement("LI");
-    //       li.innerHTML = key;
-    //       x.append(li);
-    //     } 
-    //     document.querySelector(".btn btn-primary dropdown-toggle").append(x);
-    //     return data;
-    //     })
+        // console.log(data);
+        let label = document.createElement("LABEL")
+        let x = document.createElement("SELECT");
+        label.setAttribute("ID", "ziplist")
+        label.innerHTML="Choose zipcode";
+        x.setAttribute("ID", "ziplist")
+        for(let i = 0; i<Object.keys(data).length;i++) {
+          if ( Object.keys(data)[i] == 38){continue;}
+          let li = document.createElement("OPTION");
+          li.innerHTML = Object.keys(data)[i];
+          x.appendChild(li);
+        } 
+        let temp =document.querySelector(".dropdown")
+        temp.appendChild(label);
+        temp.appendChild(x);
+        return data;
+        })
     //   .then((data) => {
     //     let content = document.querySelector(".content");
     //     content.setAttribute("id", "mapid");
@@ -94,7 +99,7 @@
     //     for(let i= 0; i < data[UserSelect].length; i++) {
     //         L.marker([data[UserSelect][i][0], data[UserSelect][i][1]]).addTo(map);
     //       }
-        })
+        // })
 
   </script>
    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

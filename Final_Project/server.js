@@ -20,6 +20,7 @@ app.use(express.json());
 // And the ability to serve some files publicly, like our HTML.
 app.use(express.static('public'));
 
+let zipcode = {};
 
 
 function processDataForFrontEnd(req, res) {
@@ -28,7 +29,6 @@ function processDataForFrontEnd(req, res) {
   fetch(crimeDateURL)
   .then((data) => data.json())
   .then((data) => { 
-    let zipcode = {};
     for(let i= 0; i<data.length;i++) {
       if(data[i].clearance_code_inc_type == "ACCIDENT"){
         let latitude = data[i].latitude; // get the lat and long of the accident incident
@@ -46,15 +46,20 @@ function processDataForFrontEnd(req, res) {
               let temp = zipcode[zip];
               temp.push([latitude, long]);
               zipcode[zip] = temp;// gives the zipcode
+              return zipcode;
           })
+          .then((rep) => {
+            if (i == 5-1){
+              res.send({rep}); // here's where we return data to the front end
+            }
+            })
+          .catch((err) => {
+            console.log(err);
+            res.redirect('/error');
+          });
       }
     }
-    // console.log(zipcode);
-    return zipcode;   
   })
-  .then((data) => {
-    res.send({data}); // here's where we return data to the front end
-    })
   .catch((err) => {
     console.log(err);
     res.redirect('/error');

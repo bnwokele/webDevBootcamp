@@ -48,14 +48,28 @@
     </div>
   </div>
   <script>
-    let content = document.querySelector(".content");
-    content.setAttribute("id", "mapid");
+    fetch('/api')
+      .then((data) => {
+        let x = document.createElement("UL");
+        x.setAttribute("class", "ziplist")
+        for(let key in data) {
+          if ( key == 38){continue;}
+          let li = document.createElement("LI");
+          li.innerHTML = key;
+          x.append(li);
+        } 
+        document.querySelector(".btn btn-primary dropdown-toggle").append(x);
+        return data;
+        })
+      .then((data) => {
+        let content = document.querySelector(".content");
+        content.setAttribute("id", "mapid");
 
-    let map = L.map("mapid").setView([38.9935762, -76.9452331], 13);
+        let map = L.map("mapid").setView([38.9935762, -76.9452331], 13);
 
-    L.tileLayer(
-      "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA",
-      {
+        L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA",
+        {
         attribution:
           'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -66,82 +80,19 @@
         zoomOffset: -1,
         accessToken:
           "pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA"
-      }
+        }
     ).addTo(map);
 
     let marker = L.marker([38.9935762, -76.9452331]).addTo(map);
     marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
-    
+      })
     // add lat/lon with accident incidents to the map
     fetch('/api')
-      .then((data) => data.json())
       .then((data) => {
-        //console.log(data) 
-        let newArray1 = [];
-        for(let i= 0; i < data.length; i++) {
-          if(data[i].clearance_code_inc_type == "ACCIDENT")
-            newArray1.push(data[i].location)
-          } 
-          console.log(newArray1); 
-          for (let i = 0; i < newArray1.length; i++) {
-            let lon = newArray1[i].latitude;
-            let lat = newArray1[i].longitude;
-
-            
-            //L.marker([lat, lon]).addTo(map);
+        for(let i= 0; i < data[UserSelect].length; i++) {
+            L.marker([data[UserSelect][i][0], data[UserSelect][i][1]]).addTo(map);
           }
         })
-
-
-
-
-  const zipCodeURL = 'https://data.princegeorgescountymd.gov/resource/rv3k-ecwy.json'; // Enter the URL for the data you would like to retrieve here
-  const crimeDateURL = 'https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json'
-    let code = []
-  // zipcode collector
-    let zipcode = {};
-    fetch(zipCodeURL)
-    .then((data) => data.json())
-    .then((data) => { 
-      for(let i= 0;  i<data.length;i++){
-        zipcode[data[i].zip_code]=[];
-      }
-      // console.log(zipcode)
-      return data;
-    })
-
-    //data point zipcode adder
-    //let code = [];
-    fetch(crimeDateURL)
-    .then((data) => data.json())
-    .then((data) => { 
-      for(let i= 0; i<=data.length;i++) {
-        if(data[i].clearance_code_inc_type == "ACCIDENT"){
-          let latitude = data[i].latitude; // get the lat and long of the accident incident
-          let long= data[i].longitude 
-          // api to change lat and long to zipcode
-          let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-          fetch(url)//make call to the zipcode api
-            .then((rep) => rep.json())
-            .then((rep) => {
-              let arr= JSON.stringify(rep).split(" ");
-              let start=arr[1].search("postalCode");
-              zip= parseInt(arr[1].substring(start+13,start+18));
-              // zipcode[zip] = zipcode[zip].push([latitude, long]);// gives the zipcode
-              zipcode.zip.push([latitude, long]);// gives the zipcode
-            })
-        }
-      }
-      return zipcode;   
-    })
-      .then((data) => {
-        console.log(data)
-        res.send({zipcode}); // here's where we return data to the front end
-      })
-      .catch((err) => {
-        console.log(err);
-        res.redirect('/error');
-      });
 
   </script>
    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

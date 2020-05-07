@@ -1,45 +1,3 @@
-      //  // zipcode collector
-      //  let zipcode = {};
-      //  fetch('https://data.princegeorgescountymd.gov/resource/rv3k-ecwy.json')
-      //   .then((data) => data.json())
-      //   .then((data) => { 
-      //     for(let i= 0; i<data.length;i++){
-      //       zipcode[i]=data[i].zip_code;
-      //     }
-      //     return data;
-      //   })
-      
-      // // data point zipcode adder
-      // fetch('https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json')
-      //   .then((data) => data.json())
-      //   .then((data) => { 
-      //     // console.log(data);
-      //     for(let i= 0; i<=0;i++) {
-      //       if(data[i].clearance_code_inc_type == "ACCIDENT"){
-      //         let latitude = data[i].latitude;
-      //         let long= data[i].longitude
-      //         url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-      //         // str= str.replace(/[ ]/g,"+");
-      //         // url ="http://www.google.com/search?hl=en&source=hp&q=" + str +"&aq=f&oq=&aqi=";
-      //         // console.log(url);
-      //         fetch(url)//searches the zipcode api
-      //           .then((rep) => rep.json())
-      //           .then(rep => {
-      //             let arr= JSON.stringify(rep).split(" ");
-      //             start=arr[1].search("postalCode")
-      //             let code = []
-      //             code.push(parseInt(arr[1].substring(start+13,start+18)));// gives the zipcode   
-      //             return code;
-      //           });
-      //      }
-      //    }
-      //  })
-      //   // .then((data) => { 
-      //   //   for(let i= 0; i<zipcode.length;i++){
-            
-      //   //   }
-      //   //   return data;
-      //   // })
 // These are our required libraries to make the server work.
 // We're including a server-side version of Fetch to build on your client-side work
 const express = require('express');
@@ -65,62 +23,43 @@ app.use(express.static('public'));
 
 
 function processDataForFrontEnd(req, res) {
-  const zipCodeURL = 'https://data.princegeorgescountymd.gov/resource/rv3k-ecwy.json'; // Enter the URL for the data you would like to retrieve here
   const crimeDateURL = 'https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json'
-
-  // zipcode collector
+  //data point zipcode adder
+  fetch(crimeDateURL)
+  .then((data) => data.json())
+  .then((data) => { 
     let zipcode = {};
-    fetch(zipCodeURL)
-    .then((data) => data.json())
-    .then((data) => { 
-      for(let i= 0; i<data.length;i++){
-        zipcode[i]=data[i].zip_code;
+    for(let i= 0; i<data.length;i++) {
+      if(data[i].clearance_code_inc_type == "ACCIDENT"){
+        let latitude = data[i].latitude; // get the lat and long of the accident incident
+        let long= data[i].longitude 
+        // api to change lat and long to zipcode
+        // let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
+        let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
+        fetch(url)//make call to the zipcode api
+          .then((rep) => rep.json())
+          .then((rep) => {
+            let arr= JSON.stringify(rep).split(" ");
+            let start=arr[1].search("postalCode");
+            zip= parseInt(arr[1].substring(start+13,start+18));
+            if (!(zip in zipcode)){
+              zipcode[zip]=[];
+            } 
+              let temp = zipcode[zip];
+              temp.push([latitude, long]);
+              zipcode[zip] = temp;// gives the zipcodeg
+          })
       }
-      console.log(zipcode)
-      return data;
+    }
+    return zipcode;   
+  })
+    .then((data) => {
+      res.send({data}); // here's where we return data to the front end
     })
-
-    //data point zipcode adder
-    //let code = [];
-    fetch(crimeDateURL)
-    .then((data) => data.json())
-    .then((data) => { 
-      // console.log(data);
-      for(let i= 0; i<=0;i++) {
-        if(data[i].clearance_code_inc_type == "ACCIDENT"){
-          let latitude = data[i].latitude; // get the lat and long of the accident incident
-          let long= data[i].longitude 
-          // api to change lat and long to zipcode
-          let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-          fetch(url)//make call to the zipcode api
-            .then((rep) => rep.json())
-            .then((rep) => {
-              let arr= JSON.stringify(rep).split(" ");
-              console.log(arr)
-              let start=arr[1].search("postalCode");
-              console.log(start)
-              let code = []
-              code.push(parseInt(arr[1].substring(start+13,start+18)));// gives the zipcode
-              console.log(code)
-              return code;   
-            })
-        }
-      }
-    })
-    // .then((data) => { 
-    //   for(let i= 0; i<zipcode.length;i++){
-        
-    //   }
-    //   return data;
-    // })
-      // .then((data) => {
-      //   console.log(data)
-      //   res.send({ data }); // here's where we return data to the front end
-      // })
-      .catch((err) => {
-        console.log(err);
-        res.redirect('/error');
-      });
+    .catch((err) => {
+      console.log(err);
+      res.redirect('/error');
+    });
 }
 
 // This is our first route on our server.
@@ -128,10 +67,4 @@ function processDataForFrontEnd(req, res) {
 // by typing in: localhost:3000/api or 127.0.0.1:3000/api
 app.get('/api', (req, res) => {processDataForFrontEnd(req, res)});
 
-<<<<<<< HEAD
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-=======
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-
->>>>>>> 8ca000d4ee934dcd1865e135b4646a59c9bb9289

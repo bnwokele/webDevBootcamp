@@ -33,10 +33,12 @@ function processDataForFrontEnd(req, res) {
       for(let i= 0; i<data.length;i++){
         zipcode[i]=data[i].zip_code;
       }
+      console.log(zipcode)
       return data;
     })
 
-    // data point zipcode adder
+    //data point zipcode adder
+    //let code = [];
     fetch(crimeDateURL)
     .then((data) => data.json())
     .then((data) => { 
@@ -45,19 +47,22 @@ function processDataForFrontEnd(req, res) {
         if(data[i].clearance_code_inc_type == "ACCIDENT"){
           let latitude = data[i].latitude;
           let long= data[i].longitude
-          url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
+          let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
           // str= str.replace(/[ ]/g,"+");
           // url ="http://www.google.com/search?hl=en&source=hp&q=" + str +"&aq=f&oq=&aqi=";
           // console.log(url);
           fetch(url)//searches the zipcode api
             .then((rep) => rep.json())
-            .then(rep => {
+            .then((rep) => {
               let arr= JSON.stringify(rep).split(" ");
-              start=arr[1].search("postalCode")
+              console.log(arr)
+              let start=arr[1].search("postalCode");
+              console.log(start)
               let code = []
-              code.push(parseInt(arr[1].substring(start+13,start+18)));// gives the zipcode   
-              return code;
-            });
+              code.push(parseInt(arr[1].substring(start+13,start+18)));// gives the zipcode
+              console.log(code)
+              return code;   
+            })
         }
       }
     })
@@ -69,12 +74,12 @@ function processDataForFrontEnd(req, res) {
     // })
       // .then((data) => {
       //   console.log(data)
-      //   res.send({ data: data }); // here's where we return data to the front end
+      //   res.send({ data }); // here's where we return data to the front end
       // })
-      // .catch((err) => {
-      //   console.log(err);
-      //   res.redirect('/error');
-      // });
+      .catch((err) => {
+        console.log(err);
+        res.redirect('/error');
+      });
 }
 
 // This is our first route on our server.

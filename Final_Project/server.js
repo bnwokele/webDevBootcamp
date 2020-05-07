@@ -1,6 +1,6 @@
-      // zipcode collector
-      let zipcode = {};
-      fetch('https://data.princegeorgescountymd.gov/resource/rv3k-ecwy.json')
+       // zipcode collector
+       let zipcode = {};
+       fetch('https://data.princegeorgescountymd.gov/resource/rv3k-ecwy.json')
         .then((data) => data.json())
         .then((data) => { 
           for(let i= 0; i<data.length;i++){
@@ -31,14 +31,15 @@
                   code.push(parseInt(arr[1].substring(start+13,start+18)));// gives the zipcode   
                   return code;
                 });
-            }
-          }
-        })
+           }
+         }
+       })
         // .then((data) => { 
         //   for(let i= 0; i<zipcode.length;i++){
             
         //   }
         //   return data;
         // })
+
 
 

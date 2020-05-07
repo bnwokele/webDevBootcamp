@@ -46,13 +46,11 @@ function processDataForFrontEnd(req, res) {
       // console.log(data);
       for(let i= 0; i<=0;i++) {
         if(data[i].clearance_code_inc_type == "ACCIDENT"){
-          let latitude = data[i].latitude;
-          let long= data[i].longitude
+          let latitude = data[i].latitude; // get the lat and long of the accident incident
+          let long= data[i].longitude 
+          // api to change lat and long to zipcode
           let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-          // str= str.replace(/[ ]/g,"+");
-          // url ="http://www.google.com/search?hl=en&source=hp&q=" + str +"&aq=f&oq=&aqi=";
-          // console.log(url);
-          fetch(url)//searches the zipcode api
+          fetch(url)//make call to the zipcode api
             .then((rep) => rep.json())
             .then((rep) => {
               let arr= JSON.stringify(rep).split(" ");
@@ -61,7 +59,6 @@ function processDataForFrontEnd(req, res) {
               console.log(start)
               let code = []
               code.push(parseInt(arr[1].substring(start+13,start+18)));// gives the zipcode
-              console.log(code)
               console.log(code)
               return code;   
             })
@@ -90,4 +87,3 @@ function processDataForFrontEnd(req, res) {
 app.get('/api', (req, res) => {processDataForFrontEnd(req, res)});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-

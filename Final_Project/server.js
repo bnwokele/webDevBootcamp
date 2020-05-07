@@ -62,6 +62,7 @@ function processDataForFrontEnd(req, res) {
               let code = []
               code.push(parseInt(arr[1].substring(start+13,start+18)));// gives the zipcode
               console.log(code)
+              console.log(code)
               return code;   
             })
         }

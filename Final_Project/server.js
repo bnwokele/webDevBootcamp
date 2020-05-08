@@ -47,7 +47,6 @@ function processDataForFrontEnd(req, res) {
               temp.push([latitude, long]);
               zipcode[zip] = temp;// gives the zipcode
               return zipcode;
-              console.log(zipcode)
           })
           .then((rep) => {
             if (i == 5 - 1){

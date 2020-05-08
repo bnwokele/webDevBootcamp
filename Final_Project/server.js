@@ -1,3 +1,4 @@
+
 // These are our required libraries to make the server work.
 // We're including a server-side version of Fetch to build on your client-side work
 const express = require('express');
@@ -22,20 +23,19 @@ app.use(express.static('public'));
 
 let zipcode = {};
 
-
 function processDataForFrontEnd(req, res) {
   const crimeDateURL = 'https://data.princegeorgescountymd.gov/resource/wb4e-w4nf.json'
   //data point zipcode adder
   fetch(crimeDateURL)
   .then((data) => data.json())
   .then((data) => { 
-    for(let i= 0; i<data.length;i++) {
+    for(let i= 0; i< data.length;i++) {
       if(data[i].clearance_code_inc_type == "ACCIDENT"){
         let latitude = data[i].latitude; // get the lat and long of the accident incident
         let long= data[i].longitude 
         // api to change lat and long to zipcode
-        // let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-        let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
+        let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
+        //let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
         fetch(url)//make call to the zipcode api
           .then((rep) => rep.json())
           .then((rep) => {
@@ -47,9 +47,11 @@ function processDataForFrontEnd(req, res) {
               temp.push([latitude, long]);
               zipcode[zip] = temp;// gives the zipcode
               return zipcode;
+              console.log(zipcode)
           })
           .then((rep) => {
-            if (i == 5-1){
+            if (i == 5 - 1){
+              console.log(rep)
               res.send({rep}); // here's where we return data to the front end
             }
             })
@@ -60,10 +62,10 @@ function processDataForFrontEnd(req, res) {
       }
     }
   })
-  .catch((err) => {
-    console.log(err);
-    res.redirect('/error');
-  });
+// .catch((err) => {
+//   console.log(err);
+//   res.redirect('/error');
+// });
 }
 
 // This is our first route on our server.

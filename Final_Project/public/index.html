@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"  href="style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"  href="style.css">
   <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -42,64 +42,69 @@
       <div class = "content">
         <div class = "search bar"></div>
         <div class = "dropdown">
-          <button class="btn btn-primary dropdown-toggle">Zip Code</button>
+          <label for="ziplist">Choose Zip Code</label>
+          <select id="ziplist"></select>
+          <button onclick="zipCodePointsMap()" class="btn btn-primary dropdown-toggle">Check Zip Code Points</button>
         </div>
       </div>
     </div>
   </div>
   <script>
+    // let content = document.querySelector(".content");
+        // content.setAttribute("id", "mapid");
+
+        // let map = L.map("mapid").setView([38.9935762, -76.9452331], 13);
+
+        // L.tileLayer(
+        //   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA",
+        //   {
+        //   attribution:
+        //     'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
+        //     '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        //     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        //   maxZoom: 18,
+        //   id: "mapbox/streets-v11",
+        //   tileSize: 512,
+        //   zoomOffset: -1,
+        //   accessToken:
+        //     "pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA"
+        //   }
+    // ).addTo(map);
+
+        // let marker = L.marker([38.9935762, -76.9452331]).addTo(map);
+        // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
+
+    // Zip code values in the drop-down menu
+    let x = document.querySelector("#ziplist");
+
     fetch('/api')
       .then((data) => data.json())
       .then((data) => {
-        // console.log(data);
-        let label = document.createElement("LABEL")
-        let x = document.createElement("SELECT");
-        label.setAttribute("ID", "ziplist")
-        label.innerHTML="Choose zipcode";
-        x.setAttribute("ID", "ziplist")
-        for(let i = 0; i<Object.keys(data).length;i++) {
-          if ( Object.keys(data)[i] == 38){continue;}
+        console.log(Object.keys(data.rep));
+        for(let i = 0; i < Object.keys(data.rep).length;i++) {
+          if ( Object.keys(data.rep)[i] == 38 || Object.keys(data.rep)[i] == "NaN"){continue;}
           let li = document.createElement("OPTION");
-          li.innerHTML = Object.keys(data)[i];
+          li.setAttribute("value", Object.keys(data.rep)[i])
+          li.innerHTML = Object.keys(data.rep)[i];
           x.appendChild(li);
         } 
-        let temp =document.querySelector(".dropdown")
-        temp.appendChild(label);
-        temp.appendChild(x);
-        return data;
+      })
+
+      // obtain the value that the user chose and plot lat/lon on the map
+      function zipCodePointsMap() { 
+        selectZipCode = document.querySelector('#ziplist'); 
+        let userSelect = selectZipCode.value; 
+        console.log(userSelect);
+        fetch('/api')
+        .then((data) => data.json())
+        .then((data) => {
+          console.log(data.rep[userSelect])
+          // // add lat/lon with accident incidents to the map
+          // for(let i= 0; i < data.rep[userSelect].length; i++) {
+          //    L.marker([data.rep[UserSelect][i][0], data.rep[UserSelect][i][1]]).addTo(map);
+          // }
         })
-    //   .then((data) => {
-    //     let content = document.querySelector(".content");
-    //     content.setAttribute("id", "mapid");
-
-    //     let map = L.map("mapid").setView([38.9935762, -76.9452331], 13);
-
-    //     L.tileLayer(
-    //     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA",
-    //     {
-    //     attribution:
-    //       'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
-    //       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    //       'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //     maxZoom: 18,
-    //     id: "mapbox/streets-v11",
-    //     tileSize: 512,
-    //     zoomOffset: -1,
-    //     accessToken:
-    //       "pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA"
-    //     }
-    // ).addTo(map);
-
-    // let marker = L.marker([38.9935762, -76.9452331]).addTo(map);
-    // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
-    //   })
-    // // add lat/lon with accident incidents to the map
-    //   .then((data) => {
-    //     UserSelect = document.querySelector(".btn btn-primary dropdown-toggle")
-    //     for(let i= 0; i < data[UserSelect].length; i++) {
-    //         L.marker([data[UserSelect][i][0], data[UserSelect][i][1]]).addTo(map);
-    //       }
-        // })
+      }
 
   </script>
    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

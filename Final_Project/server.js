@@ -35,7 +35,7 @@ function processDataForFrontEnd(req, res) {
         let long= data[i].longitude 
         // api to change lat and long to zipcode
         let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-        //let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
+        // let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
         fetch(url)//make call to the zipcode api
           .then((rep) => rep.json())
           .then((rep) => {

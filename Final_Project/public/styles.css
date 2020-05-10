@@ -6,9 +6,23 @@ body{
     
 }
 
-.wrapper{}
+.container{
+    position: absolute;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: flex-start;
+}
 
-.container{}
+.wrapper{
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
 
 header{}
 

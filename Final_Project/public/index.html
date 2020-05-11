@@ -89,6 +89,16 @@
             L.marker([parseFloat(data[i][0])  , parseFloat(data[i][1])]).addTo(map)
             // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
           }
+
+
+          fetch("/api", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({value: x.value}),
+        })
+          // xhr.send(JSON.stringify({value: value}));
     }
 
     fetch('/api')

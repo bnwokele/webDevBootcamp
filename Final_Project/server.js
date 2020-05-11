@@ -34,8 +34,8 @@ function processDataForFrontEnd(req, res) {
         let latitude = data[i].latitude; // get the lat and long of the accident incident
         let long= data[i].longitude 
         // api to change lat and long to zipcode
-        let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-        // let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
+        // let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
+        let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
         fetch(url)//make call to the zipcode api
           .then((rep) => rep.json())
           .then((rep) => {
@@ -75,18 +75,19 @@ app
 .get((req, res) => {processDataForFrontEnd(req, res)})
 .post((req, res) => {
   console.log("/api post request", req.body);
-  if (!req.body.name) {
+  if (!req.body.value) {
     console.log(req.body);
     res.status("418").send("something went wrong, additionally i am a teapot");
   } else {
-    req.body.name
-    .then((result) => {
-      console.log(result);
-      res.send("your request was successful"); // simple mode
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    console.log(req.body)
+  //   req.body.value
+  //   .then((result) => {
+  //     console.log(result);
+  //     res.send("your request was successful"); // simple mode
+  //   })
+  //.catch((err) => {
+    //   console.log(err);
+    // });
   }
 })
 // .put((req, res) => {

@@ -3,6 +3,7 @@ body{
     margin: 0;
     padding: 0;
     background: white;
+    padding: 1%;
     
 }
 
@@ -30,6 +31,8 @@ header{}
 
 .location{}
 
-.summary{}
+.summary{
+    display: block;
+}
 
 .content{}

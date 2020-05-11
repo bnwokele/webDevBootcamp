@@ -40,9 +40,11 @@
       </div>
       <div class = "location"></div>
       <div class = "dropdown">
-        <label for="ziplist">Choose Zip Code</label>
-        <select id="ziplist" name="ziplist"></select>
-        <button onclick="zipCodePointsMap()" class="btn btn-primary dropdown-toggle">Check Zip Code Points</button>
+        <form id="drop-down">
+          <label for="ziplist">Choose Zip Code</label>
+          <select id="ziplist" name="ziplist"></select>
+          <button onclick="zipCodePointsMap()" class="btn btn-primary dropdown-toggle">Check Zip Code Points</button>
+        </form>
       </div>
       <div class = "content" style="height: 500px;">
         <div class = "search bar"></div>
@@ -90,23 +92,25 @@
             // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
           }
 
-          let dropdown = document.querySelector("#ziplist");
+          // let dropdown = document.querySelector("#drop-down");
+          // let formToSend = new FormData(dropdown);
+          // console.log(formToSend)
 
-          fetch("/api", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(Object.fromEntries(formToSend)),
-          })
-            .then((data) => data.json()) // note: we didn't send JSON, so there's no JSON to get.
-            .then((jsonresponse) => {
-              console.log(jsonresponse.response);
-              // btn.setAttribute("disabled", true);
-              const br = document.createElement("br");
-              target.append(br);
-              target.append(`${jsonresponse.response}`);
-            });
+          // fetch("/api", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify(Object.fromEntries(formToSend)),
+          // })
+            // .then((data) => data.json()) // note: we didn't send JSON, so there's no JSON to get.
+            // .then((jsonresponse) => {
+            //   console.log(jsonresponse.response);
+            //   // btn.setAttribute("disabled", true);
+            //   const br = document.createElement("br");
+            //   target.append(br);
+            //   target.append(`${jsonresponse.response}`);
+            // });
     }
 
     fetch('/api')

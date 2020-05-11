@@ -29,7 +29,7 @@ function processDataForFrontEnd(req, res) {
   fetch(crimeDateURL)
   .then((data) => data.json())
   .then((data) => { 
-    for(let i= 0; i< data.length;i++) {
+    for(let i= 0; i< 200;i++) {
       if(data[i].clearance_code_inc_type == "ACCIDENT"){
         let latitude = data[i].latitude; // get the lat and long of the accident incident
         let long= data[i].longitude 
@@ -72,23 +72,23 @@ function processDataForFrontEnd(req, res) {
 // by typing in: localhost:3000/api or 127.0.0.1:3000/api
 app
 .route('/api')
-.get((req, res) => {processDataForFrontEnd(req, res)});
-// .post((req, res) => {
-//   console.log("/api post request", req.body);
-//   if (!req.body.name) {
-//     console.log(req.body);
-//     res.status("418").send("something went wrong, additionally i am a teapot");
-//   } else {
-//     writeUser(req.body.name, dbSettings)
-//     .then((result) => {
-//       console.log(result);
-//       res.send("your request was successful"); // simple mode
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-//   }
-// })
+.get((req, res) => {processDataForFrontEnd(req, res)})
+.post((req, res) => {
+  console.log("/api post request", req.body);
+  if (!req.body.name) {
+    console.log(req.body);
+    res.status("418").send("something went wrong, additionally i am a teapot");
+  } else {
+    req.body.name
+    .then((result) => {
+      console.log(result);
+      res.send("your request was successful"); // simple mode
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+})
 // .put((req, res) => {
 //   console.log("/api put request", req.body);
 //   if (!req.body.name) {

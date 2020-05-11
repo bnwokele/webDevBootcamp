@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet"  href="style.css">
+  <link rel="stylesheet" type="text/css"  href="style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet"  href="style.css">
   <link
@@ -20,8 +20,8 @@
 ></script>
 </head>
 <body>
-  <div class = "wrapper">
-    <div class = "container">
+  <div class = "container">
+    <div class = "wrapper">
       <div class = "header">
         <h1 style="margin-top: 50px;">Accident Incidents</h1>
       </div>
@@ -34,77 +34,85 @@
             <a class="nav-link" href="about.html">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="crimeIncident.html">Crime Incident</a>
+            <a class="nav-link" href="documentation.html">Documentation</a>
           </li>
         </ul>
       </div>
       <div class = "location"></div>
-      <div class = "content">
+      <div class = "dropdown">
+        <label for="ziplist">Choose Zip Code</label>
+        <select id="ziplist"></select>
+        <button onclick="zipCodePointsMap()" class="btn btn-primary dropdown-toggle">Check Zip Code Points</button>
+      </div>
+      <div class = "content" style="height: 500px;">
         <div class = "search bar"></div>
-        <div class = "dropdown">
-          <label for="ziplist">Choose Zip Code</label>
-          <select id="ziplist"></select>
-          <button onclick="zipCodePointsMap()" class="btn btn-primary dropdown-toggle">Check Zip Code Points</button>
-        </div>
       </div>
     </div>
   </div>
   <script>
-    // let content = document.querySelector(".content");
-        // content.setAttribute("id", "mapid");
+    let content = document.querySelector(".content");
+        content.setAttribute("id", "mapid");
 
-        // let map = L.map("mapid").setView([38.9935762, -76.9452331], 13);
+        let map = L.map("mapid").setView([38.7049008906, -76.8826991171], 13);
 
-        // L.tileLayer(
-        //   "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA",
-        //   {
-        //   attribution:
-        //     'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
-        //     '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-        //     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        //   maxZoom: 18,
-        //   id: "mapbox/streets-v11",
-        //   tileSize: 512,
-        //   zoomOffset: -1,
-        //   accessToken:
-        //     "pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA"
-        //   }
-    // ).addTo(map);
-
-        // let marker = L.marker([38.9935762, -76.9452331]).addTo(map);
-        // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
+        L.tileLayer(
+          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA",
+          {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,' +
+            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 25,
+          id: "mapbox/streets-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken:
+            "pk.eyJ1IjoiYm53b2tlbGUiLCJhIjoiY2s4azA0ODE4MG1wMzNnbXZ2ZW50MGdvbiJ9.AySpMhZu2bKPza678B_BGA"
+          }
+    ).addTo(map);
 
     // Zip code values in the drop-down menu
     let x = document.querySelector("#ziplist");
 
+    // obtain the value that the user chose and plot lat/lon on the map4
+    function zipCodePointsMap() {
+        k= document.querySelector(".secret").innerHTML;
+        k =JSON.parse(k);
+        data= k.rep[x.value];
+        // add lat/lon with accident incidents to the map
+        for(let i= 0; i < data.length; i++) {
+          if (i == 1){
+            map.setView([parseFloat(data[i][0])  , parseFloat(data[i][1])], 13);
+          }
+            console.log(parseFloat(data[i][0]));
+            console.log(parseFloat(data[i][1]));
+            L.marker([parseFloat(data[i][0])  , parseFloat(data[i][1])]).addTo(map)
+            // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
+          }
+    }
+
     fetch('/api')
       .then((data) => data.json())
       .then((data) => {
-        console.log(Object.keys(data.rep));
+        // console.log(Object.keys(data.rep));
         for(let i = 0; i < Object.keys(data.rep).length;i++) {
           if ( Object.keys(data.rep)[i] == 38 || Object.keys(data.rep)[i] == "NaN"){continue;}
           let li = document.createElement("OPTION");
           li.setAttribute("value", Object.keys(data.rep)[i])
           li.innerHTML = Object.keys(data.rep)[i];
           x.appendChild(li);
-        } 
+        }
+        return data
       })
-
-      // obtain the value that the user chose and plot lat/lon on the map
-      function zipCodePointsMap() { 
-        selectZipCode = document.querySelector('#ziplist'); 
-        let userSelect = selectZipCode.value; 
-        console.log(userSelect);
-        fetch('/api')
-        .then((data) => data.json())
-        .then((data) => {
-          console.log(data.rep[userSelect])
-          // // add lat/lon with accident incidents to the map
-          // for(let i= 0; i < data.rep[userSelect].length; i++) {
-          //    L.marker([data.rep[UserSelect][i][0], data.rep[UserSelect][i][1]]).addTo(map);
-          // }
-        })
-      }
+      .then((data) => {
+        p= document.createElement("p");
+        p.setAttribute("class","secret");
+        p.innerHTML = JSON.stringify(data);
+        document.querySelector(".content").appendChild(p);
+        p.style.visibility = "hidden";
+      //  return zipCodePointsMap(data);
+      })
+      
 
   </script>
    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

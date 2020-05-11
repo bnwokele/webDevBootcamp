@@ -70,6 +70,40 @@ function processDataForFrontEnd(req, res) {
 // This is our first route on our server.
 // To access it, we can use a "GET" request on the front end
 // by typing in: localhost:3000/api or 127.0.0.1:3000/api
-app.get('/api', (req, res) => {processDataForFrontEnd(req, res)});
+app
+.route('/api')
+.get((req, res) => {processDataForFrontEnd(req, res)});
+// .post((req, res) => {
+//   console.log("/api post request", req.body);
+//   if (!req.body.name) {
+//     console.log(req.body);
+//     res.status("418").send("something went wrong, additionally i am a teapot");
+//   } else {
+//     writeUser(req.body.name, dbSettings)
+//     .then((result) => {
+//       console.log(result);
+//       res.send("your request was successful"); // simple mode
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+//   }
+// })
+// .put((req, res) => {
+//   console.log("/api put request", req.body);
+//   if (!req.body.name) {
+//     console.log(req.body);
+//     res.status("418").send("something went wrong, additionally i am a teapot");
+//   } else {
+//     writeUser(req.body.name, dbSettings)
+//     .then((result) => {
+//       console.log(result);
+//       res.json( {response : "A successful request was made!!!"} ); // simple mode
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+//   }
+// });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

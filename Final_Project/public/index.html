@@ -41,7 +41,7 @@
       <div class = "location"></div>
       <div class = "dropdown">
         <label for="ziplist">Choose Zip Code</label>
-        <select id="ziplist"></select>
+        <select id="ziplist" name="ziplist"></select>
         <button onclick="zipCodePointsMap()" class="btn btn-primary dropdown-toggle">Check Zip Code Points</button>
       </div>
       <div class = "content" style="height: 500px;">
@@ -89,6 +89,24 @@
             L.marker([parseFloat(data[i][0])  , parseFloat(data[i][1])]).addTo(map)
             // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
           }
+
+          let dropdown = document.querySelector("#ziplist");
+
+          fetch("/api", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(Object.fromEntries(formToSend)),
+          })
+            .then((data) => data.json()) // note: we didn't send JSON, so there's no JSON to get.
+            .then((jsonresponse) => {
+              console.log(jsonresponse.response);
+              // btn.setAttribute("disabled", true);
+              const br = document.createElement("br");
+              target.append(br);
+              target.append(`${jsonresponse.response}`);
+            });
     }
 
     fetch('/api')
@@ -112,6 +130,8 @@
         p.style.visibility = "hidden";
       //  return zipCodePointsMap(data);
       })
+
+      
       
 
   </script>

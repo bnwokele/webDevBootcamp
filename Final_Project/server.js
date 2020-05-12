@@ -79,32 +79,16 @@ app
     console.log(req.body);
     res.status("418").send("something went wrong, additionally i am a teapot");
   } else {
-    console.log(req.body)
-  //   req.body.value
-  //   .then((result) => {
-  //     console.log(result);
-  //     res.send("your request was successful"); // simple mode
-  //   })
-  //.catch((err) => {
-    //   console.log(err);
-    // });
+    res.send("your request was successful");
   }
 })
-// .put((req, res) => {
-//   console.log("/api put request", req.body);
-//   if (!req.body.name) {
-//     console.log(req.body);
-//     res.status("418").send("something went wrong, additionally i am a teapot");
-//   } else {
-//     writeUser(req.body.name, dbSettings)
-//     .then((result) => {
-//       console.log(result);
-//       res.json( {response : "A successful request was made!!!"} ); // simple mode
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-//   }
-// });
-
+.put((req, res) => {
+  console.log("/api post request", req.body);
+  if (!req.body.value) {
+    console.log(req.body);
+    res.status("418").send("something went wrong, additionally i am a teapot");
+  } else {
+    res.send("your request worked");
+  }
+})
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

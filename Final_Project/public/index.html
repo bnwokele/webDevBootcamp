@@ -73,12 +73,13 @@
 
     // Zip code values in the drop-down menu
     let x = document.querySelector("#ziplist");
-
+    let userTrack = [];
     // obtain the value that the user chose and plot lat/lon on the map4
     function zipCodePointsMap() {
         k= document.querySelector(".secret").innerHTML;
         k =JSON.parse(k);
         data= k.rep[x.value];
+        userTrack.push(x.value);
         // add lat/lon with accident incidents to the map
         for(let i= 0; i < data.length; i++) {
           if (i == 1){
@@ -89,16 +90,29 @@
             L.marker([parseFloat(data[i][0])  , parseFloat(data[i][1])]).addTo(map)
             // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
           }
-
+          fetch("/api", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({value: x.value}),
+          })
+          .then((data) => data.text())
+          .then((txtresponse) => {
+            console.log(txtresponse);
+          });
 
           fetch("/api", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({value: x.value}),
-        })
-          // xhr.send(JSON.stringify({value: value}));
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({value: userTrack}),
+          })
+          .then((data) => data.text())
+          .then((txtresponse) => {
+            console.log(txtresponse);
+          });
     }
 
     fetch('/api')

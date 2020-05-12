@@ -29,13 +29,13 @@ function processDataForFrontEnd(req, res) {
   fetch(crimeDateURL)
   .then((data) => data.json())
   .then((data) => { 
-    for(let i= 0; i< data.length;i++) {
+    for(let i= 0; i< 200;i++) {
       if(data[i].clearance_code_inc_type == "ACCIDENT"){
         let latitude = data[i].latitude; // get the lat and long of the accident incident
         let long= data[i].longitude 
         // api to change lat and long to zipcode
-        let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
-        // let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
+        // let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=tyleigh";
+        let url ="http://api.geonames.org/findNearbyPostalCodesJSON?lat="+latitude+"&lng="+long+"&username=bnwokele";
         fetch(url)//make call to the zipcode api
           .then((rep) => rep.json())
           .then((rep) => {
@@ -50,7 +50,6 @@ function processDataForFrontEnd(req, res) {
           })
           .then((rep) => {
             if (i == 5 - 1){
-              console.log(rep)
               res.send({rep}); // here's where we return data to the front end
             }
             })
@@ -70,6 +69,25 @@ function processDataForFrontEnd(req, res) {
 // This is our first route on our server.
 // To access it, we can use a "GET" request on the front end
 // by typing in: localhost:3000/api or 127.0.0.1:3000/api
-app.get('/api', (req, res) => {processDataForFrontEnd(req, res)});
-
+app
+.route('/api')
+.get((req, res) => {processDataForFrontEnd(req, res)})
+.post((req, res) => {
+  console.log("/api post request", req.body);
+  if (!req.body.value) {
+    console.log(req.body);
+    res.status("418").send("something went wrong, additionally i am a teapot");
+  } else {
+    res.send("your request was successful");
+  }
+})
+.put((req, res) => {
+  console.log("/api post request", req.body);
+  if (!req.body.value) {
+    console.log(req.body);
+    res.status("418").send("something went wrong, additionally i am a teapot");
+  } else {
+    res.send("your request worked");
+  }
+})
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

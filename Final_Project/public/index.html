@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet"  href="style.css">
+  <link rel="stylesheet" type="text/css"  href="style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet"  href="style.css">
   <link
@@ -73,12 +73,13 @@
 
     // Zip code values in the drop-down menu
     let x = document.querySelector("#ziplist");
-
+    let userTrack = [];
     // obtain the value that the user chose and plot lat/lon on the map4
     function zipCodePointsMap() {
         k= document.querySelector(".secret").innerHTML;
         k =JSON.parse(k);
         data= k.rep[x.value];
+        userTrack.push(x.value);
         // add lat/lon with accident incidents to the map
         for(let i= 0; i < data.length; i++) {
           if (i == 1){
@@ -89,6 +90,29 @@
             L.marker([parseFloat(data[i][0])  , parseFloat(data[i][1])]).addTo(map)
             // marker.bindPopup("<strong>Eppley Recreation Center</strong>").openPopup();
           }
+          fetch("/api", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({value: x.value}),
+          })
+          .then((data) => data.text())
+          .then((txtresponse) => {
+            console.log(txtresponse);
+          });
+
+          fetch("/api", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({list: userTrack}),
+          })
+          .then((data) => data.text())
+          .then((txtresponse) => {
+            console.log(txtresponse);
+          });
     }
 
     fetch('/api')

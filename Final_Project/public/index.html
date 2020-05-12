@@ -107,7 +107,7 @@
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({value: userTrack}),
+            body: JSON.stringify({list: userTrack}),
           })
           .then((data) => data.text())
           .then((txtresponse) => {

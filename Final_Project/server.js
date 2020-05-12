@@ -50,7 +50,6 @@ function processDataForFrontEnd(req, res) {
           })
           .then((rep) => {
             if (i == 5 - 1){
-              console.log(rep)
               res.send({rep}); // here's where we return data to the front end
             }
             })
